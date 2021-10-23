@@ -29,7 +29,10 @@ jobs:
     
     - name: Docker Setup Buildx
       uses: docker/setup-buildx-action@v1.6.0
-    - name: Run CloudDefense SAST Scan
-      run: |
-        curl https://raw.githubusercontent.com/CloudDefenseAI/cd/master/latest/cd-latest-linux-x64.tar.gz > /tmp/cd-latest-linux-x64.tar.gz && tar -C /usr/local/bin -xzf /tmp/cd-latest-linux-x64.tar.gz && chmod +x /usr/local/bin/cdefense
-        cdefense sast --lang=node --project-name="Javascript_Github_Action_Pipeline_Demo" --api-key=${{ secrets.PROD_API_KEY }}
+      
+    - name: Run CloudDefense SAST
+      uses: cdefense/actions/node@master
+      with:
+        command: sast
+        project-name: Javascript_Github_Action_Pipeline_Demo
+        api-key: ${{ secrets.PROD_API_KEY }}
